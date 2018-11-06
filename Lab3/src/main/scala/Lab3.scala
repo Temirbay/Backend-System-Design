@@ -87,7 +87,7 @@ object Lab3 extends App {
   def getInfo(human: Human): String = human match {
 
     case Student(name) =>
-      s"$name"
+      name
 
     case Teacher(id) =>
       s"$id"
@@ -102,5 +102,6 @@ object Lab3 extends App {
 
   val allLists: List[List[Human]] = List(students, teachers, characters)
 
-  val all: List[Human] = allLists.flatMap(item => item.map(human => human))
+  val all: List[Human] =
+    allLists.flatten
 }

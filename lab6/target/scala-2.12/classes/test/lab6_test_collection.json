@@ -1,0 +1,429 @@
+{
+	"info": {
+		"_postman_id": "589e97a0-c1ea-46ab-b068-c1b5378ae5bd",
+		"name": "lab6",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create waybill with status 'accepted'",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "282b67eb-d03f-4852-87f7-8bcc78f52f29",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Response code is 200\"] = responseCode.code === 200;",
+							"tests[\"Message is OK\"] = responseBody.has(\"OK\");",
+							"tests[\"Status is 200\"] = responseBody.has(\"200\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": 0,\n    \"weight\": \"150.15\",\n    \"amount\": 15,\n    \"cost\": \"100\",\n    \"status\": \"accepted\",\n    \"volume\": \"180\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8081/waybills",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"waybills"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create waybill with status 'in progress'",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "48139ea8-1ef9-4e47-8a06-445b978de120",
+						"exec": [
+							"var data = JSON.parse(responseBody)",
+							"tests[\"Response code is 200\"] = responseCode.code === 200;",
+							"tests[\"Message is OK\"] = data.message == \"OK\";",
+							"tests[\"Status is 200\"] = data.status == 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": 1,\n    \"weight\": \"150.15\",\n    \"amount\": 15,\n    \"cost\": \"100\",\n    \"status\": \"in progress\",\n    \"volume\": \"180\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8081/waybills",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"waybills"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create existing waybill",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f13f4245-3d4d-47d6-913f-8a11168a7a33",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"tests[\"Response code is 200\"] = responseCode.code === 200;",
+							"tests[\"Message has 'already exists'\"] = responseBody.has(\"already exists\");",
+							"tests[\"Status is 500\"] = responseBody.has(\"500\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": 1,\n    \"weight\": \"150.15\",\n    \"amount\": 15,\n    \"cost\": \"100\",\n    \"status\": \"in progress\",\n    \"volume\": \"180\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8081/waybills",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"waybills"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all waybills",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1c8752df-7b4f-422f-85ee-2809490b5eb0",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"tests[\"Response code is 200\"] = responseCode.code === 200;",
+							"",
+							"tests[\"Waybill has status 'accepted'\"] = responseBody.has(\"accepted\");",
+							"tests[\"Waybill has status 'in progress'\"] = responseBody.has(\"in progress\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"location\": {\n        \"longitude\": 71.4703558,\n        \"latitude\":  51.1605227\n    },\n    \"result\": {},\n    \"id\": 55,\n    \"status\": \"PLANNED\",\n    \"createdAt\": 1540751311652,\n    \"debtorId\": 23,\n    \"collectorId\": 23\n}"
+				},
+				"url": {
+					"raw": "localhost:8081/waybills",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"waybills"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get waybill with id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cb1660ec-ef8e-4f47-a654-02850f10073d",
+						"type": "text/javascript",
+						"exec": [
+							"var data = JSON.parse(responseBody)",
+							"",
+							"tests[\"Response code is 200\"] = responseCode.code === 200;",
+							"",
+							"tests[\"Weight is 150.15\"] = responseBody.has (\"150.15\")",
+							"tests[\"Cost is 100\"] = responseBody.has (\"100\")"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"location\": {\n        \"longitude\": 71.4703558,\n        \"latitude\":  51.1605227\n    },\n    \"result\": {},\n    \"id\": 55,\n    \"status\": \"PLANNED\",\n    \"createdAt\": 1540751311652,\n    \"debtorId\": 23,\n    \"collectorId\": 23\n}"
+				},
+				"url": {
+					"raw": "localhost:8081/waybill/0",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"waybill",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get waybill with no existing id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2d6ee980-a1a8-4a35-8657-82ee9036d7ee",
+						"type": "text/javascript",
+						"exec": [
+							"var data = JSON.parse(responseBody)",
+							"",
+							"tests[\"Response code is 200\"] = responseCode.code === 200;",
+							"",
+							"",
+							"tests[\"Message is 'Could not find'\"] = responseBody.has(\"Could not find\");",
+							"tests[\"Status is 500\"] = responseBody.has(500);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"location\": {\n        \"longitude\": 71.4703558,\n        \"latitude\":  51.1605227\n    },\n    \"result\": {},\n    \"id\": 55,\n    \"status\": \"PLANNED\",\n    \"createdAt\": 1540751311652,\n    \"debtorId\": 23,\n    \"collectorId\": 23\n}"
+				},
+				"url": {
+					"raw": "localhost:8081/waybill/5",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"waybill",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update waybill with status 'accepted'",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e48b80b3-dfc0-426b-8563-a30631718b87",
+						"type": "text/javascript",
+						"exec": [
+							"var data = JSON.parse(responseBody)",
+							"tests[\"Response code is 200\"] = responseCode.code === 200;",
+							"",
+							"tests[\"Waybill amonut is 5\"] = responseBody.has(5);",
+							"tests[\"Waybill status is 'refund'\"] = responseBody.has(\"refund\");",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": 0,\n    \"weight\": \"150.15\",\n    \"amount\": 5,\n    \"cost\": \"100\",\n    \"status\": \"refund\",\n    \"volume\": \"180\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8081/waybill/0",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"waybill",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update waybill with no existing id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "df2e3598-f92a-469d-b6bf-e5e21536a951",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Response code is 200\"] = responseCode.code === 200;",
+							"tests[\"Message has 'doesn't exists'\"] = responseBody.has(\"doesn't exists\");",
+							"tests[\"Status is 500\"] = responseBody.has(500);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": 5,\n    \"weight\": \"150.15\",\n    \"amount\": 5,\n    \"cost\": \"100\",\n    \"status\": \"refund\",\n    \"volume\": \"180\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8081/waybill/5",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"waybill",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete waybill with id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cbfbd6c5-5423-445b-b87b-1578dc113ba1",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"tests[\"Message is: OK\"] = responseBody.has(\"OK\");",
+							"tests[\"Status is: 200\"] = responseBody.has(\"200\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8081/waybill/0",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"waybill",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete waybill with not existing id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2e7ab83d-f5b3-435f-bba3-7483a49d8aba",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"tests[\"Message has: 'doesn't exists'\"] = responseBody.has(\"doesn't exists\");",
+							"tests[\"Status is: 500\"] = responseBody.has(500);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8081/waybill/0",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"waybill",
+						"0"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
