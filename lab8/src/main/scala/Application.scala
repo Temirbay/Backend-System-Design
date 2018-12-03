@@ -5,6 +5,8 @@ import com.amazonaws.services.s3.{AmazonS3, AmazonS3ClientBuilder}
 import service.{FileManager}
 
 object Application extends App {
+
+/*
   val bucketName = "lab8-files"
 
   import com.amazonaws.auth.BasicAWSCredentials
@@ -23,6 +25,9 @@ object Application extends App {
 
   // start copying files from one folder to another
   //fileManager ! FileManager.StartFilesCopy
-  fileManager ! FileManager.StartFilesRead
+  fileManager ! FileManager.StartFilesRead*/
+
+
+	println ("Good Luck on Finals ;)")
 
 }
